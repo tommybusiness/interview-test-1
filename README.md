@@ -1,3 +1,3 @@
 # interview-test
-Follow this pdf fuid.
+Follow this pdf.
 

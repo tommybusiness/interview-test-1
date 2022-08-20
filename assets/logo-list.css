@@ -1,0 +1,35 @@
+.logo-bar {
+  text-align: center;
+  margin-bottom: -30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.logo-bar__item {
+  flex: 0 1 140px;
+  vertical-align: middle;
+  margin: 0 10px 20px
+}
+
+@media only screen and (min-width:769px) {
+  .logo-bar__item {
+    flex: 0 1 150px;
+    margin: 0 20px 30px;
+  }
+}
+
+.logo-bar__image {
+  display: block;
+  margin: 0 auto;
+  width: 125px;
+}
+@media only screen and (min-width:1100px) {
+  .logo-bar__image {
+    width: 300px;
+  }
+}
+.logo-bar__link {
+  display: block;
+}

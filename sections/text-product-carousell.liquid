@@ -1,0 +1,415 @@
+{% assign productsPerRow = section.settings.productsPerRow %}
+
+
+<section
+  class="featured-products-wrapper is-slider"
+  data-section-id="{{ section.id }}"
+  data-section-type="home"
+  data-section-child="featured-products"
+  data-section-style="slider"
+>
+  <div class="featured-content{% if section.settings.textAlignment == 'text-right' %} featured-content--text-right{% elsif section.settings.textAlignment == 'text-center' %} featured-content--text-center{% endif %}">
+
+    <div class="grid homepage-text-with-image--right homepage-text-with-image--middle">
+
+      <div class="homepage-image-with-text--text grid-item-50">
+
+        {% if section.settings.heading != blank or section.settings.subHeading != blank %}
+          <header class="index-header" {% render 'animations', type: 'fadeUpAnim1' %}>
+
+            {% if section.settings.subHeading != blank %}
+              <h3 class="index-subheading{% if section.settings.heading == blank %} image-with-text--subheading-no-margin{% endif %}">{{ section.settings.subHeading }}</h3>
+            {% endif %}
+
+            {% if section.settings.heading != blank %}
+              <h2 class="image-with-text--title">{{ section.settings.heading }}</h2>
+            {% endif %}
+
+          </header>
+        {% endif %}
+
+        {% if section.settings.text != blank %}
+          <div class="image-with-text--content rte{% if section.settings.heading == blank and section.settings.subHeading == blank %} image-with-text--content-no-margin{% endif %}"
+            {% if section.settings.heading != blank or section.settings.subHeading != blank %}
+              style="width:100%;"
+            {% endif %}
+            {% if section.settings.heading != blank or section.settings.subHeading != blank %}
+              {% render 'animations', type: 'fadeUpAnim2' %}
+            {% else %}
+              {% render 'animations', type: 'fadeUpAnim1' %}
+            {% endif %}>
+            {{ section.settings.text }}
+
+            {% if section.settings.url %}
+              {% assign url = section.settings.url %}
+            {% endif %}
+
+            {% if section.settings.button != blank and url %}
+              {% assign button = true %}
+            {% endif %}
+
+          </div>
+        {% endif %}
+        <div>
+          {% if button %}
+              <a class="image-with-text-button button hover-animation {% if title and section.settings.text != empty %} third-fade{% elsif title and section.settings.text == empty %} first-fade{% elsif title or section.settings.text == empty %} second-fade{% else %} first-fade{% endif %}" href="{{ section.settings.url }}">
+              <span class="button-text">{{- section.settings.button | escape -}}</span>
+            </a>
+          {% endif %}
+        </div>
+      </div>
+
+
+      <div class=" grid-item-50">
+      <div class="featured-products-outer" data-featured-products-outer>
+
+        {% if section.settings.collection != blank %}
+
+          {% assign image_custom_sizes = true %}
+          {% assign image_xs_width = '280x' %}
+          {% assign image_s_width = '310x' %}
+          {% assign image_m_width = '340x' %}
+          {% assign image_l_width = '380x' %}
+          {% assign image_default_width = '410x' %}
+          {% assign image_noscript_width = '220x' %}
+          {% assign delayAmount = 0 %}
+
+          {%- assign collection = collections[section.settings.collection] -%}
+
+
+          <div class="grid featured-products swiper-container" {% render 'animations', type: 'fadeUpAnim1' %}>
+            <div class="grid featured-products-inner swiper-wrapper" data-featured-products data-products="{{ section.settings.productsPerRow }}">
+              {% for item in collection.products limit: 14 %}
+              {% assign delayAmount = delayAmount | plus: 100 %}
+                {% render 'product-item', item: item, grid: 'grid-item-50 swiper-slide', productsPerRow: productsPerRow, image_default_width: '1024x', additionalInfo: true, productInfoSetting: section.settings.product-info, isSearch: false, delayAmount: delayAmount %}
+              {% endfor %}
+            </div>
+            <div class="swiper-button-prev">
+              {% render 'icon-arrow' %}
+            </div>
+            <div class="swiper-button-next">
+              {% render 'icon-arrow' %}
+            </div>
+            <div class="swiper-scrollbar"></div>
+          </div>
+
+        {% else %}
+
+          <div class="grid featured-products swiper-container onboarding" {% render 'animations', type: 'fadeUpAnim1' %}>
+            <div class="grid featured-products-inner swiper-wrapper" data-featured-products data-products="{{ section.settings.productsPerRow }}">
+
+              {% assign itemCount = 0 %}
+              {% for i in (1..10) %}
+                {% assign itemCount = itemCount | plus: 1 %}
+                {% capture delayAmount %}{% cycle '100', '200', '300', '400', '500', '600', '700', '800' %}{% endcapture %}
+
+                <article class="grid-item-20 swiper-slide"
+                  data-aos-duration="600"
+                  data-aos-delay="{{ delayAmount }}"
+                  data-aos="fade-up"
+                  data-aos-easing="capital-easing">
+                    <div class="svg-placeholder">
+                      {% capture placeholder %}product-{% cycle '1', '2', '3', '4', '5', '6' %}{% endcapture %}
+                      {{ placeholder | placeholder_svg_tag }}
+                    </div>
+                    <div class="item-content {{ section.settings.product-info }}">
+                      <h3 class="item-title product-homepage-slider--onboarding-title">{{ 'layout.onboarding.product_title' | t }}</h3>
+                      <span class="item-price">
+                        <span class="money">{{ 10000 | money }}</span>
+                      </span>
+                    </div>
+                </article>
+              {% endfor %}
+            </div>
+            <div class="swiper-button-prev">
+              {% render 'icon-arrow' %}
+            </div>
+            <div class="swiper-button-next">
+              {% render 'icon-arrow' %}
+            </div>
+            <div class="swiper-scrollbar"></div>
+          </div>
+
+        {% endif %}
+        </div>
+      </div>
+  </div>
+
+</section>
+
+
+
+
+{% if section.settings.showViewAll %}
+{% assign viewAllDelay = section.settings.productsPerRow | plus: 1 | times: 100 %}
+  <div class="featured-products-item-more" {% render 'animations', type: 'fadeCycle', delay: viewAllDelay %}>
+    {% render 'index-collection-view-all', section: section, collection: collection %}
+  </div>
+{% endif %}
+
+<style>
+  #shopify-section-{{ section.id }} .featured-content,
+  #shopify-section-{{ section.id }} .featured-content h2,
+  #shopify-section-{{ section.id }} .featured-content h3 {
+    color: {{ section.settings.colorText }};
+  }
+
+  #shopify-section-{{ section.id }} .image-with-text--content {
+    color: {{ section.settings.bodyTextColor }};
+  }
+
+
+  #shopify-section-{{ section.id }} .homepage-image-with-text--text {
+    background-color: {{ section.settings.colorBg }};
+  }
+
+  {% if section.settings.add-spacing %}
+
+  @media screen and (min-width:768px) {
+    #shopify-section-{{ section.id }} .homepage-image-with-text--text {
+      padding: 50px;
+    }
+  }
+  {% endif %}
+
+  #shopify-section-{{ section.id }} .featured-content .homepage-text-with-image--right {
+    flex-direction: initial;
+  }
+  @media screen and (max-width:768px) {
+    #shopify-section-{{ section.id }} .grid-item-50 {
+      width: 100%;
+    }
+    #shopify-section-{{ section.id }} .featured-content .homepage-text-with-image--right {
+      flex-direction: column;
+    }
+  }
+
+  #shopify-section-{{ section.id }}.section-index-products .featured-products-wrapper.is-slider .homepage-image-with-text--text{
+    width: 100%;
+    padding: 0;
+  }
+
+  #shopify-section-{{ section.id }} .product-item-in-cart {
+    display: none;
+  }
+
+
+</style>
+  
+  {% schema %}
+{
+    "name": "Text with products",
+    "class": "section-index-text section-index-product",
+    "settings": [
+          {
+            "type": "header",
+            "content": {
+                "en": "Text",
+                "de": "Text",
+                "es": "Texto",
+                "fr": "Texte",
+                "pt-PT": "Texto"
+            }
+        },
+        {
+            "type": "text",
+            "id": "heading",
+            "label": {
+                "en": "Heading",
+                "de": "Überschrift",
+                "es": "Encabezado",
+                "fr": "Rubrique",
+                "pt-PT": "Título"
+            },
+            "default": {
+              "en": "Share your story",
+              "de": "Teilen Sie Ihre Geschichte",
+              "es": "Comparte tu historia",
+              "fr": "Partagez votre histoire",
+              "pt-PT": "Partilhe a sua história"
+            }
+        },
+        {
+            "type": "richtext",
+            "id": "text",
+            "label": {
+                "en": "Text",
+                "de": "Rich Text",
+                "es": "Texto enriquecido",
+                "fr": "Texte riche",
+                "pt-PT": "Texto rico"
+            },
+            "default": {
+                "en": "<p>Write something nice. Maybe a value proposition— tell us what you stand for.</p>",
+                "de": "<p>Schreiben Sie etwas Nettes. Vielleicht ein Wertversprechen – erzählen Sie uns, wofür Sie stehen.</p>",
+                "es": "<p>Escriba algo bonito. Tal vez una proposición de valor: díganos lo que usted representa.</p>",
+                "fr": "<p>Écrivez quelque chose de gentil. Peut-être une proposition de valeur : dites-nous ce que vous représentez.</p>",
+                "pt-PT": "<p>Escreva algo simpático. Talvez uma proposta de valor — diga-nos o que representa.</p>"
+            }
+        },
+        {
+					"type": "color",
+					"id": "colorBg",
+					"label": {
+							"en": "Background color",
+							"de": "Hintergrundfarbe",
+							"es": "Color de fondo",
+							"fr": "Couleur d'arrière-plan",
+							"pt-PT": "Cor de fundo"
+					},
+					"default": "#f5f5f5"
+				},
+        {
+					"type": "color",
+					"id": "colorText",
+					"label": {
+							"en": "Text color",
+							"de": "Textfarbe",
+							"es": "Color del texto",
+							"fr": "Couleur du texte",
+							"pt-PT": "Cor do texto"
+					},
+					"default": "#333333"
+				},
+        {
+					"type": "color",
+					"id": "bodyTextColor",
+					"label": {
+							"en": "Body Text color",
+							"de": "Textfarbe",
+							"es": "Color del texto",
+							"fr": "Couleur du texte",
+							"pt-PT": "Cor do texto"
+					},
+					"default": "#4d4d4f"
+				},
+        {
+          "type": "select",
+          "id": "textAlignment",
+          "label": {
+              "en": "Text alignment",
+              "de": "Textausrichtung",
+              "es": "Alineación del texto",
+              "fr": "Alignement du texte",
+              "pt-PT": "Alinhamento do texto"
+          },
+          "default": "text-center",
+          "options": [
+            {
+              "value": "text-left",
+              "label": {
+                  "en": "Left",
+                  "de": "Links",
+                  "es": "Izquierda",
+                  "fr": "Gauche",
+                  "pt-PT": "Esquerda"
+              }
+            },
+            {
+              "value": "text-center",
+              "label": {
+                  "en": "Center",
+                  "de": "Mitte",
+                  "es": "Centro",
+                  "fr": "Centre",
+                  "pt-PT": "Centro"
+              }
+            },
+            {
+              "value": "text-right",
+              "label": {
+                  "en": "Right",
+                  "de": "Rechts",
+                  "es": "Derecha",
+                  "fr": "Droite",
+                  "pt-PT": "Direita"
+              }
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "button",
+          "label": {
+              "en": "Button label",
+              "de": "Button-Bezeichnung",
+              "es": "Etiqueta del botón",
+              "fr": "Étiquette du bouton",
+              "pt-PT": "Etiqueta do botão"
+          },
+          "default": {
+              "en": "Learn more",
+              "de": "Jetzt einkaufen",
+              "es": "Comprar ahora",
+              "fr": "Acheter maintenant",
+              "pt-PT": "Comprar agora"
+          }
+        },
+        {
+            "type": "url",
+            "id": "url",
+            "label": {
+                "en": "Slide link",
+                "de": "Dialink",
+                "es": "Enlace de la diapositiva",
+                "fr": "Lien coulissant",
+                "pt-PT": "Ligação do diapositivo"
+            },
+            "default": "/collections/all"
+        },
+        {
+          "type": "checkbox",
+          "id": "add-spacing",
+          "default": true,
+          "label": {
+            "en": "Add spacing"
+          }
+        },
+        {
+          "type":"collection",
+          "id":"collection",
+          "label": {
+                "en": "Collection",
+                "de": "Sammlung",
+                "es": "Colección",
+                "fr": "Collection",
+                "pt-PT": "Coleção"
+          }
+        },
+        {
+          "type": "range",
+          "id": "productsPerRow",
+          "min": 2,
+          "max": 6,
+          "step": 1,
+          "default": 3,
+          "label": {
+            "en": "Products per row (desktop)",
+            "de": "Produkte pro Zeile (Desktop)",
+            "es": "Productos por fila (escritorio)",
+            "fr": "Produits par ligne (ordinateur de bureau)",
+            "pt-PT": "Produtos por linha (ambiente de trabalho)"
+          }
+        }
+    ],
+
+    "presets": [
+        {
+            "name": {
+                "en": "text with carousell 2.0 ",
+                "de": "Bild mit Text",
+                "es": "Imagen con texto",
+                "fr": "Image avec texte",
+                "pt-PT": "Imagem com texto"
+            },
+            "category": {
+              "en": "Image",
+              "de": "Bild",
+              "es": "Imagen",
+              "fr": "Image",
+              "pt-PT": "Imagem"
+          }
+        }
+    ]
+}
+{% endschema %}

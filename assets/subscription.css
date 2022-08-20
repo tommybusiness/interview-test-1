@@ -1,0 +1,355 @@
+
+.sub-plz-login-pop-container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    justify-content: center;
+    top: 0;
+    overflow: hidden;
+    align-items: center;
+    z-index: 2;
+    display: flex;
+    transition: all 0.5s ease;
+  }
+  
+  .sub-plz-login-pop-container.close {
+    right: -100%;
+  }
+  
+  .sub-plz-login-pop-container.open {
+    right: 0;
+  }
+  
+  .sub-plz-login-pop-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .sub-plz-login-pop {
+    background: white;
+    border-radius: 25px;
+    width: 100%;
+    height: 100%;
+    max-width: 700px;
+    max-height: 400px;
+    display: flex;
+    flex-direction: column;
+    z-index: 3;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10px 20px;
+    margin: 16px;
+  }
+  
+  .sub-plz-login-pop-close {
+    color: white;
+    cursor: pointer;
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    background: #615798;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    left: calc(50% - 25px);
+    top: calc(50% - 225px);
+    font-size: 24px;
+    z-index: 4;
+  }
+  
+  .sub-plz-login-pop-close:before {
+    content: '✕';
+  }
+
+.how-to-use {
+    width:100%;
+    padding:20px 0;
+    background:#ffffff;
+}
+
+.title {
+    text-align: center;
+}
+
+h2{
+    padding-left: 30px;
+}
+
+.s-badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.s-badge {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: column;
+    width: 130px;
+}
+
+.s-badge .description{
+    text-align: center;
+    font-size: 15px;
+}
+
+.sub-product-checkout-info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media screen and (max-width: 600px) {
+    .s-badge {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        flex-direction: column;
+        width: 80px;
+    }
+    
+    .s-badge .description{
+        text-align: center;
+        font-size: 12px;
+        line-height: 1.2em;
+    }
+}
+
+.subscription-content{
+    margin: 20px auto;
+    max-width: 800px;
+    background: #ffffff;
+    padding: 16px;
+    border: 2px solid #f69174;
+}
+
+.subscription-header{
+    padding: 20px 0;
+}
+
+.sub-product{
+    display: flex; 
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.sub-product-texts{
+    margin-left:8px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 300px;
+}
+
+.freq-selection-button {
+    padding: 2px;
+    width: 19%;
+    text-align: center;
+    border: 1px solid #f69174;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 26px;
+    cursor: pointer;
+  }
+
+  .freq-selection-button.freq {
+    background: #F37029;
+    color: white;
+  }
+
+.freq-button-row{
+    display:flex;
+    flex-direction: row;
+    width:100%;
+    height: 100%;
+    justify-content: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    font-size: 16px;
+}
+
+.freq-selection-button{
+    margin-left: 20px;
+    width: 80%;
+    height: 50px;
+}
+
+.sub-add-to-cart{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    padding-bottom: 25px;
+}
+
+.sub-add-button{
+    border-radius: 8px;
+}
+
+@media only screen and (max-width: 550px){
+    .sub-product-image{
+        height: 175px;
+        width: 175px;
+    }
+
+    .sub-product-texts{
+        margin-left:8px; 
+        flex-direction: column;
+        justify-content: center;
+        width: 300px;
+        font-size: 14px;
+    }
+
+    .freq-button-row{
+        display:flex;
+        flex-direction: column;
+        width:100%;
+        justify-content: space-evenly;
+        align-items: center;
+        padding-left: 30px;
+        padding-right: 30px;
+        font-size: 16px;
+    }
+
+    .freq-selection-button{
+        margin-left: 20px;
+        margin-bottom: 20px;
+        width: 90%;
+    }
+
+    .sub-add-to-cart{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        padding-bottom: 25px;
+    }
+
+    .sub-product-checkout-info{
+    font-size: 16px;
+    margin-bottom: 20px;
+    }
+}
+
+@media only screen and (max-width: 415px){
+    .freq-product-texts{
+        margin-left:8px; 
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 300px;
+        font-size: 12px;
+    }
+}
+
+
+<html><head></head><body>*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+.sub-range-slider {
+  margin: 20px 0 0 0%;
+}
+
+.sub-range-slider {
+  width: 100%;
+}
+
+.sub-range-slider__range {
+  -webkit-appearance: none;
+  width: calc(100% - (73px));
+  height: 10px;
+  border-radius: 5px;
+  background: #d7dcdf;
+  outline: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sub-range-slider__range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #86c389;
+  cursor: pointer;
+  transition: background 0.15s ease-in-out;
+}
+
+.sub-range-slider__range::-webkit-slider-thumb:hover {
+  background: #86c389;
+}
+
+.sub-range-slider__range:active::-webkit-slider-thumb {
+  background: #86c389;
+}
+
+.sub-range-slider__range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 0;
+  border-radius: 50%;
+  background: #86c389;
+  cursor: pointer;
+  transition: background 0.15s ease-in-out;
+}
+
+.sub-range-slider__range::-moz-range-thumb:hover {
+  background: #86c389;
+}
+
+.sub-range-slider__range:active::-moz-range-thumb {
+  background: #86c389;
+}
+
+.sub-range-slider__range:focus::-webkit-slider-thumb {
+  box-shadow: 0 0 0 3px #fff, 0 0 0 6px #1abc9c;
+}
+
+.sub-range-slider__value {
+  display: inline-block;
+  position: relative;
+  width: 60px;
+  color: #fff;
+  line-height: 20px;
+  text-align: center;
+  border-radius: 3px;
+  background: #1ebc81;
+  padding: 5px 10px;
+  margin-left: 8px;
+}
+
+.sub-range-slider__value:after {
+  position: absolute;
+  top: 8px;
+  left: -7px;
+  width: 0;
+  height: 0;
+  border-top: 7px solid transparent;
+  border-right: 7px solid #2c3e50;
+  border-bottom: 7px solid transparent;
+  content: &#34;
+  &#34;
+  ;
+}
+
+::-moz-range-track {
+  background: #d7dcdf;
+  border: 0;
+}
+
+input::-moz-focus-inner,
+input::-moz-focus-outer {
+  border: 0;
+}
+
+</body></html>

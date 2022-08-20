@@ -1,0 +1,573 @@
+{{ 'subscription.css' | asset_url | stylesheet_tag }}
+{% assign collection=collections['Subscription']%}
+
+<div class="subscription-content">
+  <div class="subscription-header">
+    <h2>1. How many boxes do you need per cycle? </h2>
+  </div>
+
+  {% for product in collection.products%}
+  <div class="sub-product" data-vid={{ product.variants[0].id }} data-price={{ product.price }}>
+    <img class="sub-product-image" src="{{ product.featured_image | img_url: '250x250' }}"
+      alt="{{product.featured_image.alt}}">
+    <div class="sub-product-texts" style="display: flex;flex-direction: column;justify-content: center;">
+      <div class="sub-product-title">{{product.title}}</div>
+
+
+      <div class="sub-product-m-bottom-row">
+        {% if product.title == "Breeze, Organic Cotton Panty Liners"%}
+        <div class="sub-product-size"><span>(15 cm, 20 count)</span></div>
+        {% else if product.title == "Twilight, Organic Cotton Night-time Pad" %}
+        <div class="sub-product-size"><span>(29 cm, 10 count)</span></div>
+        {% else if product.title == "Dawn, Organic Cotton Day-time Pad" %}
+        <div class="sub-product-size"><span>(24 cm, 10 count)</span></div>
+        {% endif %}
+        <div><span>HKD{{ product.price | money }}</span></div>
+      </div>
+
+      <div class="sub-range-slider" style="width:100%;justify-content: space-evenly;">
+        <input class="sub-range-slider__range" type="range" value="0" min="0" max="10">
+        <span class="sub-range-slider__value" id="qty">0</span>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+
+  <div style="margin-top: 50px;"></div>
+  <div class="subscription-header">
+    <h2>2. Choose your delivery cycle </h2>
+  </div>
+
+  <div class="freq-button-row">
+    <div class="freq-selection-button freq" data-value="1">Every Month</div>
+    <div class="freq-selection-button" data-value="3">Every 3 Months</div>
+    <div class="freq-selection-button" data-value="6">Every 6 Months</div>
+  </div>
+
+  <div class="subscription-header">
+    <h2>3. Voola! Your period is in good hands! </h2>
+  </div>
+
+  <div class="sub-add-to-cart">
+    <div class="sub-product-checkout-info">
+      <div>Price:</div>
+      <div class="sub-product-price" style="text-align:center; margin-bottom: -16px;">Price: <span
+          class="sub-after-discount-price">$0.00</span> <span class="sub-before-discount-price"
+          style="font-size:12px;text-decoration: line-through;">$0.00</span>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:row;justify-content: center;">
+      <div class="rich-text-button button sub-add-button" id="add" onclick="RemoveBoxProductsBeforeUpdateCart_sub()">
+        Update Box
+      </div>
+    </div>
+  </div>
+
+  <div class="sub-plz-login-pop-container close">
+    <div class="sub-plz-login-pop-overlay"></div>
+    <div class="sub-plz-login-pop">
+      <div class="sub-plz-login-pop-close"></div>
+      <div class="Heading" style="font-size:20px">Summary</div>
+      <div class="summary usb-boxes" style="display:flex; flex-direction:column; max-width:320px; margin: 16px auto;">
+        <ul class="sub-summary-list">
+          <li>
+            <div class="sub-usb-bi-qty">8</div>
+            <div class="sub-usb-bi-title">Template</div>
+          </li>
+          <li>
+            <div class="sub-usb-bi-qty">4</div>
+            <div class="sub-usb-bi-title">Box of 10 Organic Cotton Night Pads (29cm)</div>
+          </li>
+          <li>
+            <div class="usb-bi-qty">4</div>
+            <div class="sub-usb-bi-title">Box of 8 Super Absorbency Applicator Tampons</div>
+          </li>
+          <li>
+            <div class="sub-usb-bi-qty">8</div>
+            <div class="sub-usb-bi-title">Box of 16 Super Absorbency Non-Applicator Tampons</div>
+          </li>
+        </ul>
+        <div class="sub-box-freq"><b>Delivery Cycle</b>:&nbsp;Every 4 Months</div>
+      </div>
+      <div style="font-size:14px">You are not able to manage you box through web if you don't have an account.<br>
+          You can contact us through phone call or email in order to edit/delete your box.</div>
+          <div class="summary-buttons">
+            <div>
+              <button class="button continue-button"
+                onclick="DrawerReplaceCart();$('.plz-login-pop-close').click();">Continue</button>
+            </div>
+            <div>
+              <a class="button continue-button" style="padding-top: 6px;"
+               href="/account/login" >Login</a>
+            </div>
+          </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function rangeSlider() {
+    let slider = document.querySelectorAll(".sub-range-slider");
+    let range = document.querySelectorAll(".sub-range-slider__range");
+    let value = document.querySelectorAll(".sub-range-slider__value");
+
+    slider.forEach((currentSlider) => {
+      value.forEach((currentValue) => {
+        let val = currentValue.previousElementSibling.getAttribute("value");
+        currentValue.innerText = val;
+      });
+
+      range.forEach((elem) => {
+        elem.addEventListener("input", (eventArgs) => {
+          elem.nextElementSibling.innerText = eventArgs.target.value;
+        });
+      });
+    });
+  }
+  rangeSlider();
+
+  var selling_plan = {};
+
+  selling_plan["freq 1"] = [];
+
+  selling_plan["freq 1"].push("533364809");
+  selling_plan["freq 1"].push("533430345");
+  selling_plan["freq 1"].push("533397577");
+  selling_plan["freq 3"] = [];
+
+  selling_plan["freq 3"].push("532676681");
+  selling_plan["freq 3"].push("532774985");
+  selling_plan["freq 3"].push("532578377");
+  selling_plan["freq 6"] = [];
+
+  selling_plan["freq 6"].push("532709449");
+  selling_plan["freq 6"].push("532807753");
+  selling_plan["freq 6"].push("532611145");
+
+  var discount_value = 15;
+  var discount_type = "percentage";
+
+
+  function SelectedFrequency_sub() {
+    const freq = document.querySelector('.freq');
+    return freq.getAttribute('data-value');
+  }
+
+  var old_box;
+  var old_freq;
+  var box_after_checkout = false;
+  Initialize_sub();
+
+  function Initialize_sub() {
+
+    if (localStorage.hasOwnProperty('box_products')) {
+      var box_products = localStorage.getItem('box_products');
+      for (var i = 0; i < box_products.length; i++) {
+        $('.bab-product .qty-button-row').eq(i).children('.qty-selection-button').removeClass('qty');
+        $('.bab-product .qty-button-row').eq(i).children('.qty-selection-button[data-value="' + box_products[i] +
+          '"]').addClass('qty');
+      }
+      $("select[name='selling_plan'] option[value='" + localStorage.getItem('box_frequency') + "']").attr('selected',
+        'selected');
+      UpdatePrice_sub();
+    }
+
+  }
+
+  // $("select[name='selling_plan']").change(function () {
+  //   SaveBoxSelections_sub();
+  // });
+
+  $('.freq-selection-button').click(function () {
+    console.log("clicked freq-selection-button");
+    let count = $(this).parent().children().length;
+    for (var i = 0; i < count; i++) {
+      $(this).parent().children().eq(i).removeClass('freq');
+    }
+    $(this).addClass('freq');
+    //SaveBoxSelections();
+    UpdatePrice_sub();
+  });
+
+
+  $('.sub-range-slider__range').change(function () {
+    //SaveBoxSelections_sub();
+    UpdatePrice_sub();
+  });
+
+  function UpdatePrice_sub() {
+    var total = 0;
+    var price_script = "";
+    var total_qty = 0;
+    for (var i = 0; i < $('.sub-product').length; i++) {
+      var unit_price = parseFloat($('.sub-product').eq(i).attr("data-price")) / 100;
+      var quantity = parseInt($('.sub-product').eq(i).find("#qty").text());
+      total += unit_price * quantity * SelectedFrequency_sub();
+      total_qty += quantity * SelectedFrequency_sub();
+    }
+    console.log("Selected Frequency=" + SelectedFrequency_sub());
+
+    price_script = "/count/ Product(s) | <span class='sub-before-discount-price'>$" + total.toFixed(2) + "</span>";
+    if ($("select[name='selling_plan']").val() == "onetime") {
+      // Do nothing
+    } else {
+      var new_price = 0;
+      if (discount_value != 0) {
+        switch (discount_type) {
+          case "percentage":
+            new_price = (100 - discount_value) * total / 100;
+            break;
+          case "fixed_amount":
+            break;
+          case "price":
+            break;
+        }
+        price_script = "/count/ Product(s) | <span class='sub-after-discount-price'>$" + new_price.toFixed(2) +
+          "</span> <span class='sub-before-discount-price' style='font-size:12px;text-decoration: line-through;'>$" +
+          total.toFixed(2) + "</span>";
+      }
+    }
+    price_script = price_script.replace("/count/", total_qty);
+    //console.log(price_script);
+
+    $('.sub-product-price').html(price_script);
+  }
+
+
+  var datas = [];
+
+  function DrawerAddToCart_sub() {
+    console.log("DrawerAddToCart_sub()");
+    var total_qty = 0;
+    for (var i = 0; i < $('.sub-product').length; i++) {
+      total_qty += parseInt($('.sub-product').eq(i).find("#qty").html());
+    }
+    if (total_qty == 0) {
+      alert("DrawerAddToCart: Add at least 1 product into the box before continue.");
+      return;
+    }
+    console.log("DrawerAddToCart_sub: total_qty=" + total_qty);
+
+    $('.sub-add-to-cart .Heading').html("Processing...");
+    SetButtonDisableProp_sub(true);
+
+
+    datas = [];
+    var sp_id = SelectedFrequency_sub();
+
+
+    for (var i = 0; i < $('.sub-product').length; i++) {
+      var quantity = parseInt($('.sub-product').eq(i).find("#qty").html());
+      console.log("DrawerAddToCArt(): quantity="+quantity);
+      if (quantity == 0) {
+        continue;
+      }
+      if (sp_id != "onetime") {
+        var search_index = "freq " + sp_id;
+        var data = {
+          "id": $('.bab-product').eq(i).attr("data-vid"),
+          "quantity": quantity * SelectedFrequency_sub(),
+          "selling_plan": selling_plan[search_index][i],
+          "properties": {
+            "Plan": "Build a Box"
+          }
+        };
+      } else {
+        var data = {
+          "id": $('.sub-product').eq(i).attr("data-vid"),
+          "quantity": quantity,
+          "properties": {
+            "Plan": "Build a Box"
+          }
+        };
+      }
+      datas.push(data);
+    }
+
+
+
+
+    if (datas.length != 0) {
+      AddItem_sub(datas.shift());
+    }
+  }
+
+  function ShowFreqDescription_sub() {
+    var option_index = $("select[name='selling_plan']").prop('selectedIndex');
+    // Translate on LangShop or Langify
+    var content =
+      "<p>15% off total order every delivery <br> Delivery and billing every month <br> No delivery fee </p><p> 15% off every delivery <br> Delivery and billing every 3 months <br> No delivery fee </p><p>15% off total order every delivery <br> Delivery and billing every 6 months <br> No delivery fee </p><p>15% off total order every delivery<br>Delivery and billing every 6 Months <br> No delivery fee </p>";
+    content = content.split("</p><p>");
+    content[0] = content[0].replace("<p>", "");
+    content[content.length - 1] = content[content.length - 1].replace("</p>", "");
+
+    $(".freq-description-infobox").eq(0).html(content[option_index]);
+
+    $(".freq-description-infobox").removeClass('close');
+  }
+
+
+  function RemoveBoxProductsBeforeUpdateCart_sub() {
+    if (SelectedFrequency_sub() != "onetime") {
+      console.log("Going to ListSummary");
+      ListSummary_sub();
+
+    } else {
+      DrawerReplaceCart_sub();
+    }
+  }
+
+  function DrawerReplaceCart_sub(){
+    console.log("DrawerReplaceCart_sub");
+    $.ajax({
+      method: "GET",
+      url: "/cart.js",
+      dataType: "json",
+      success: function (response) {
+        console.log("DrawerReplaceCart ajax call success");
+        var qtys = [];
+        for (var i = 0; i < response.items.length; i++) {
+          var item = response.items[i];
+          if (item.properties != null) {
+            if (item.properties.hasOwnProperty("Plan")) {
+              if (item.properties.Plan == 'Build a Box')
+                qtys.push(0);
+              else
+                qtys.push(item.quantity);
+            } else {
+              qtys.push(item.quantity);
+            }
+          } else {
+            qtys.push(item.quantity);
+          }
+        }
+        $.ajax({
+          method: 'POST',
+          url: "/cart/update.js",
+          data: {
+            updates: qtys
+          },
+          success: function () {
+            console.log("going to draweraddtocart_sub()");
+            DrawerAddToCart_sub();
+          }
+        });
+      }
+    });
+
+  }
+
+
+  // function ConfirmRechargeUpdateBox() {
+  //   var _qtys = [];
+  //   var total_qty = 0;
+  //   for (var i = 0; i < $('.bab-product').length; i++) {
+  //     if (SelectedFrequency() == "onetime") {
+  //       total_qty += parseInt($('.bab-product').eq(i).find(".qty").data("value"));
+  //       _qtys.push(parseInt($('.bab-product').eq(i).find(".qty").data("value")));
+  //     } else {
+  //       total_qty += parseInt($('.bab-product').eq(i).find(".qty").data("value")) * SelectedFrequency();
+  //       _qtys.push(parseInt($('.bab-product').eq(i).find(".qty").data("value")) * SelectedFrequency());
+  //     }
+
+  //   }
+  //   if (total_qty == 0) {
+  //     alert("Add at least 1 product into the box before continue.");
+  //     return;
+  //   }
+  //   var ob_script = "";
+  //   for (var i = 0; i < $('.bab-product').length; i++) {
+  //     if (old_box[i] == '0') {
+  //       continue;
+  //     }
+  //     ob_script += "<li><div class='usb-bi-qty'>" + (old_box[i] * old_freq) + "</div><div class='usb-bi-title'>" + $(
+  //       '.bab-product-title').eq(i).html() + "</div></li>";
+
+  //   }
+  //   var nb_script = "";
+  //   for (var i = 0; i < $('.bab-product').length; i++) {
+  //     if (_qtys[i] == 0) {
+  //       continue;
+  //     }
+  //     nb_script += "<li><div class='usb-bi-qty'>" + _qtys[i] + "</div><div class='usb-bi-title'>" + $(
+  //       '.bab-product-title').eq(i).html() + "</div></li>";
+  //   }
+
+  //   $('.usb-old-box ul').html(ob_script);
+  //   $('.usb-new-box ul').html(nb_script);
+
+
+  //   if (old_freq != '1')
+  //     $('.usb-old-box .usb-freq').html("<b>Delivery Cycle</b>:&nbsp" + "Every /freq/ Months".replace('/freq/',
+  //       old_freq));
+  //   else
+  //     $('.usb-old-box .usb-freq').html("<b>Delivery Cycle</b>:&nbsp" + "Every 1 Month");
+  //   if (localStorage.getItem('box_frequency') == '1')
+  //     $('.usb-new-box .usb-freq').html("<b>Delivery Cycle</b>:&nbsp" + "Every 1 Month");
+  //   else
+  //     $('.usb-new-box .usb-freq').html("<b>Delivery Cycle</b>:&nbsp" + "Every /freq/ Months".replace('/freq/',
+  //       localStorage.getItem('box_frequency')));
+
+
+  //   if (old_freq == 'onetime')
+  //     $('.usb-old-box .usb-freq').html("<b>Delivery Cycle</b>:&nbsp" + "Just once");
+  //   if (localStorage.getItem('box_frequency') == 'onetime')
+  //     $('.usb-new-box .usb-freq').html("<b>Delivery Cycle</b>:&nbsp" + "Just once");
+
+
+  //   $('.update-subscribed-box-container').toggleClass('open');
+  //   $('.update-subscribed-box-container').toggleClass('close');
+  //   $('html').toggleClass('no-scroll');
+  // }
+
+
+  function ListSummary_sub() {
+    var _freq = SelectedFrequency_sub();
+    var _qtys = [];
+    var total_qty = 0;
+    for (var i = 0; i < $('.sub-product').length; i++) {
+      total_qty += parseInt($('.sub-product').eq(i).find("#qty").html()) * SelectedFrequency_sub();
+      _qtys.push(parseInt(parseInt($('.sub-product').eq(i).find("#qty").html()) * SelectedFrequency_sub()));
+    }
+    if (total_qty == 0) {
+      alert("Add at least 1 product into the box before continue.");
+      return;
+    }
+    var nb_script = "";
+    for (var i = 0; i < $('.sub-product').length; i++) {
+      if (_qtys[i] == 0) {
+        continue;
+      }
+      nb_script += "<li><div class='usb-bi-qty'>" + _qtys[i] + "</div><div class='usb-bi-title'>" + $(
+        '.sub-product-title').eq(i).html() + "</div></li>";
+    }
+
+    $('.sub-summary-list').html(nb_script);
+
+
+    if (_freq != '1')
+      $('.summary .sub-box-freq').html("<b>Delivery Cycle</b>:&nbsp" + "Every /freq/ Months".replace('/freq/', _freq));
+    else
+      $('.summary .sub-box-freq').html("<b>Delivery Cycle</b>:&nbsp" + "Every 1 Month");
+
+
+    $(".sub-plz-login-pop-container").toggleClass("close");
+    $(".sub-plz-login-pop-container").toggleClass("open");
+    $('html').toggleClass('no-scroll');
+  }
+
+  {% comment %}
+
+  function Override_Yes() {
+    $('.usb-confirm').html("<div class='lds-dual-ring'></div>Processing...");
+    SetButtonDisableProp(true);
+
+    var box = {};
+    for (var i = 0; i < $(".bab-product").length; i++) {
+      if (parseInt($(".bab-product .qty").eq(i).data("value")) > 0) {
+        box[$(".bab-product").eq(i).data("vid").toString()] = parseInt($(".bab-product .qty").eq(i).data("value")) *
+          SelectedFrequency();
+      }
+    }
+    var delivery_at = new Date($('input[name="date_of_delivery"]').val());
+    delivery_at = delivery_at.toISOString().replace("Z", "");
+
+    $.ajax({
+      method: "POST",
+      url: root + "bab_override.php",
+      data: {
+        customer_id: "",
+        box_data: box,
+        frequency: {
+          value: localStorage.getItem('box_frequency'),
+          unit: "month"
+        },
+        date_of_delivery: delivery_at
+      },
+      dataType: "json",
+      success: function (response) {
+        $('.usb-confirm').html("Done");
+        setTimeout(function () {
+          old_box = localStorage.getItem('box_products');
+          old_freq = localStorage.getItem('box_frequency');
+          SetButtonDisableProp(false);
+          $('.usb-confirm').html("Confirm");
+          $('.update-subscribed-box-container').toggleClass('open');
+          $('.update-subscribed-box-container').toggleClass('close');
+          $('html').removeClass('no-scroll');
+        }, 1500);
+      }
+    });
+  }
+
+  function Override_No() {
+    $('.update-subscribed-box-container').toggleClass('open');
+    $('.update-subscribed-box-container').toggleClass('close');
+    $('html').removeClass('no-scroll');
+  } 
+  {% endcomment %}
+
+  function AddItem_sub(data) {
+    console.log("AddItem_sub");
+    $.ajax({
+      type: 'POST',
+      url: '/cart/add.js',
+      dataType: 'json',
+      data: data,
+      success: function (response) {
+        if (datas.length != 0) {
+          AddItem_sub(datas.shift());
+        } else {
+          //UpdateCart_sub();
+          SetButtonDisableProp_sub(false);
+          location.reload();
+        }
+      }
+    });
+  }
+
+  function UpdateCart_sub() {
+    $.ajax({
+      method: 'GET',
+      url: "/cart",
+      data: {
+
+      },
+      success: function (response) {
+        var content = $(response).children("#sidebar-cart");
+        //$("#sidebar-cart").html(content.html());
+        if (!$(".Header__CartDot").hasClass("is-visible")) {
+          $(".Header__CartDot").addClass("is-visible");
+        }
+
+        $(".Header__CartDot").html($(".CartItem").length - 1);
+
+        $('.sub-add-to-cart .Heading').html("Done");
+        setTimeout(function () {
+          SetButtonDisableProp_sub(false);
+          $('.sub-add-to-cart .Heading').html("Update Box");
+          $('.sub-drawer-close').click();
+          $('.PageOverlay').addClass('is-visible');
+          $("#sidebar-cart").attr('aria-hidden', false);
+          $('.Drawer__Close').click(function () {
+            $('.PageOverlay').removeClass('is-visible');
+            $("#sidebar-cart").attr('aria-hidden', true);
+          });
+          $('.PageOverlay').click(function () {
+            $('.PageOverlay').removeClass('is-visible');
+            $("#sidebar-cart").attr('aria-hidden', true);
+          });
+        }, 1500);
+      }
+    });
+  }
+
+  function SetButtonDisableProp_sub(val) {
+    $('.freq-selection-button').prop('disabled', val);
+    $('.sub-add-to-cart').prop('disabled', val);
+    // $('.bab-reset').prop('disabled', val);
+    $('.select[name="selling_plan"]').prop('disabled', val);
+  }
+</script>

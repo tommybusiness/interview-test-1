@@ -11,7 +11,6 @@
 4. Programming task
 
     a. Task 1: Modify the theme as below:
-
         i. On all the pages/templates except the homepage, it becomes a sticky header bar. When you scroll down, the header with the background colour is fixed at the top.
 
             [Demo video]:
@@ -27,7 +26,6 @@
             
 
     b. Task 2: Modify the theme such that the sticky header bar works well when the announcement bar option is enabled.
-
         Demo video:
         
         https://drive.google.com/file/d/1brsjmwjIOazMqjlMxlFWFpAUUEde3faD/view?usp=sharing

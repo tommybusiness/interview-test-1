@@ -2,7 +2,7 @@
 Test 1: Create shopify trial store and customize it.
 
 1. Create a Shopify trial store.
-2. Clone this repository and create new branch like this with your name and task description.
+2. Clone this repository and create new branch including your name.
 eg: johndoe-branch
 3. Upload the theme file to the Shopoify store.
 4. Programming task

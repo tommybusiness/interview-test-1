@@ -1,5 +1,4 @@
-# Interview-test
-Test 1: Create shopify trial store and customize it.
+### Test 1: Create shopify trial store and customize it.
 
 1. Create a Shopify trial store.
 2. Clone this repository and create new branch including your name.

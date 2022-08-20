@@ -1,4 +1,4 @@
-# interview-test
+# Interview-test
 Test 1
 Create shopify trial store and customize it.
 

@@ -12,7 +12,7 @@
  
     - Task 1: Modify the theme as below:
     
-      1. On all the pages/templates except the homepage, it becomes a sticky header bar. When you scroll down, the header with the background colour is fixed at the top.
+       i. On all the pages/templates except the homepage, it becomes a sticky header bar. When you scroll down, the header with the background colour is fixed at the top.
 
         demo video: 
         

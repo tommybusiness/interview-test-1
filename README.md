@@ -14,7 +14,7 @@
     
         i. On all the pages/templates except the homepage, it becomes a sticky header bar. When you scroll down, the header with the background colour is fixed at the top.
 
-          demo video: 
+        demo video: 
         
           https://drive.google.com/file/d/1S-Hht0g5A2sK7_ON3s2mshTGWSzR0rfz/view?usp=sharing
         

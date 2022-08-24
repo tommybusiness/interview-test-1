@@ -10,7 +10,7 @@
     "isFullBleed": {{ section.settings.fullBleed | json }}
   }
 </script>
-
+<div id="myHeader">
 <div
   class="header-wrapper"
   data-header-inner
@@ -111,7 +111,7 @@
 </div>
 
   {% render 'navigation', section: section %}
-
+</div>
 <style type="text/css">
   {% if section.settings.fullBleed %}
     {%- capture rgb -%}
@@ -150,7 +150,50 @@
       }
     }
   {% endif %}
+
+#myHeader {
+    transition: all .2s cubic-bezier(.25,.46,.45,.94);
+}
+.sticky_active {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #fff;
+}
+.main-header {
+background-color:#fff
+}
+div#shopify-section-announcement-bar {
+    transition: all .2s cubic-bezier(.25,.46,.45,.94);
+}
+.out_of_view_bar {
+    transform: translateY(-100%);
+} 
 </style>
+
+<script>
+window.onscroll = function() {myFunction()};
+
+var header = document.getElementById("myHeader");
+var announcement_bar_el = document.getElementById("shopify-section-announcement-bar");
+var sticky = header.offsetTop;
+  
+function myFunction() {
+  if(window.innerWidth > 720) {
+    if (window.pageYOffset > sticky) {
+      header.classList.add("sticky_active");
+      announcement_bar_el.classList.add("out_of_view_bar");
+    } else {
+      header.classList.remove("sticky_active");
+      announcement_bar_el.classList.remove("out_of_view_bar");
+    }
+  }
+  else {
+    header.classList.remove("sticky_active");
+    announcement_bar_el.classList.remove("out_of_view_bar");
+  }
+}
+</script>
 
 {% schema %}
 {
@@ -558,9 +601,10 @@
                         "fr": "Lien vers l'image",
                         "pt-PT": "Link da imagem"
                     }
-                }
+                }  
             ]
-        }
+        }     
     ]
 }
 {% endschema %}
+  
